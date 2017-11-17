@@ -4,13 +4,21 @@ import java.util.HashMap;
 
 import diamond.run.core.model.Value;
 
-public class ScopeImpl implements ReadOnlyScope {
+public class ScopeImpl implements Scope {
+	
+	private final HashMap<String, Value> values;
+	private final Scope parent;
 	
 	{
 		values = new HashMap<>();
 	}
 	
-	private final HashMap<String, Value> values;
+	public ScopeImpl(){
+		this.parent = null;
+	}
+	public ScopeImpl(Scope parent){
+		this.parent = parent;
+	}
 	
 	@Override
 	public Value flatLookup(String name) {
@@ -19,8 +27,17 @@ public class ScopeImpl implements ReadOnlyScope {
 
 	@Override
 	public ReadOnlyScope parent() {
-		// TODO Auto-generated method stub
-		return null;
+		return parent;
+	}
+
+	@Override
+	public void put(String name, Value value) {
+		values.put(name, value);
+	}
+
+	@Override
+	public Scope chain() {
+		return new ScopeImpl(this);
 	}
 
 }

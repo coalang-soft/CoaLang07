@@ -2,7 +2,7 @@ package diamond.text.interpret;
 
 public enum TokenCategory {
 	STR_OPEN("["), STR_CLOSE("]"), BRACKET_OPEN("("), BRACKET_CLOSE(")"),
-	EXCLAMATION_MARK("!"), DOLLAR_SIGN("$"), COLON(":"),
+	COLON(":"),
 	SEMICOLON(";"),
 	
 	NUMBER, LIST_OPERATION, NAME;
@@ -31,7 +31,6 @@ public enum TokenCategory {
 		if(raw.charAt(0) == '/'){
 			return TokenCategory.LIST_OPERATION;
 		}
-		System.err.println("Check: " + raw + " interpreted as a name");
 		return NAME;
 	}
 

@@ -11,9 +11,18 @@ public interface Operator extends Function {
 			public Value take(Value b) {
 				return operate(a,b);
 			}
+
+			@Override
+			public Value callZeroArg() {
+				return this;
+			}
 		};
 	}
-	
+
 	Value operate(Value a, Value b);
+	
+	default Value callZeroArg() {
+		return this;
+	}
 	
 }

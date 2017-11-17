@@ -17,6 +17,20 @@ public class TokenizerImpl implements Tokenizer{
 			current += c;
 		}
 		return null;
-	}	
+	}
+
+	@Override
+	public Token finish(){
+		Token t = finish0();
+		current = "";
+		return t;
+	}
+	
+	private Token finish0() {
+		if(current.isEmpty()){
+			return null;
+		}
+		return new TokenImpl(current);
+	}
 	
 }

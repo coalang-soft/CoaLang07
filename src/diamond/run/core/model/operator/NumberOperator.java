@@ -3,9 +3,10 @@ package diamond.run.core.model.operator;
 import diamond.run.core.impl.DefaultSingleImpl;
 import diamond.run.core.model.Value;
 
-public interface NumberOperator extends Operator {
+public interface NumberOperator extends SingleOperator {
 	
-	default Value operate(Value a, Value b){
+	default Value operateSingle(Value a, Value b){
+		
 		return new DefaultSingleImpl(numberOperate(a.castNumber(), b.castNumber()));
 	}
 	

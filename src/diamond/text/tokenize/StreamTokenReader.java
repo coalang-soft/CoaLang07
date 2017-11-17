@@ -21,6 +21,10 @@ public class StreamTokenReader {
 				handler.handle(t);
 			}
 		}
+		Token t = tokenizer.finish();
+		if(t != null){
+			handler.handle(t);
+		}
 	}
 	
 }

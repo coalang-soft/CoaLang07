@@ -1,6 +1,7 @@
 package diamond.run.core.impl;
 
 import diamond.run.core.model.DefaultSingle;
+import diamond.run.core.model.Value;
 
 public class DefaultSingleImpl implements DefaultSingle{
 
@@ -17,6 +18,11 @@ public class DefaultSingleImpl implements DefaultSingle{
 	
 	public String toString(){
 		return object + "";
+	}
+
+	@Override
+	public Value callZeroArg() {
+		return this;
 	}
 
 }
