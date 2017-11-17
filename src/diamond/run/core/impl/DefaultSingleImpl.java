@@ -1,6 +1,6 @@
-package diamond.run.impl;
+package diamond.run.core.impl;
 
-import diamond.run.model.DefaultSingle;
+import diamond.run.core.model.DefaultSingle;
 
 public class DefaultSingleImpl implements DefaultSingle{
 

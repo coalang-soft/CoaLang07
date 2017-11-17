@@ -1,7 +1,7 @@
-package diamond.run.model.operator;
+package diamond.run.core.model.operator;
 
-import diamond.run.model.Function;
-import diamond.run.model.Value;
+import diamond.run.core.model.Function;
+import diamond.run.core.model.Value;
 
 public interface Operator extends Function {
 	

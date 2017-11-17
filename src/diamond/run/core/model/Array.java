@@ -1,4 +1,4 @@
-package diamond.run.model;
+package diamond.run.core.model;
 
 public interface Array extends Value{
 	

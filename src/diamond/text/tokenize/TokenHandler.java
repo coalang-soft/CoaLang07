@@ -1,4 +1,4 @@
-package diamond.parse;
+package diamond.text.tokenize;
 
 public interface TokenHandler {
 	

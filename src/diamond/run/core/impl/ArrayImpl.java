@@ -1,9 +1,9 @@
-package diamond.run.impl;
+package diamond.run.core.impl;
 
 import java.util.Arrays;
 
-import diamond.run.model.Array;
-import diamond.run.model.Value;
+import diamond.run.core.model.Array;
+import diamond.run.core.model.Value;
 
 public class ArrayImpl implements Array {
 

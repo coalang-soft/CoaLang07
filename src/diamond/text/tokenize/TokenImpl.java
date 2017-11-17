@@ -1,4 +1,4 @@
-package diamond.parse;
+package diamond.text.tokenize;
 
 public class TokenImpl implements Token {
 
@@ -8,8 +8,12 @@ public class TokenImpl implements Token {
 		this.string = s;
 	}
 	
-	public String toString(){
+	public String raw(){
 		return string;
+	}
+	
+	public String toString(){
+		return raw();
 	}
 
 }
