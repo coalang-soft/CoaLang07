@@ -9,7 +9,7 @@ public class ParseTest {
 	
 	public static void main(String[] args) throws IOException {
 		Scope s = new ScopeImpl();
-		Environment.init(s);
+		Environment.initGlobal(s);
 		
 		GlobalInterpreter.interpret(System.in, s);
 	}

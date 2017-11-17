@@ -18,7 +18,11 @@ public class StreamTokenReader {
 		while((i = s.read()) != -1){
 			Token t = tokenizer.feed((char) i);
 			if(t != null){
-				handler.handle(t);
+				try{
+					handler.handle(t);
+				}catch(RuntimeException e){
+					System.err.println("! " + e);
+				}
 			}
 		}
 		Token t = tokenizer.finish();

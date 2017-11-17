@@ -8,6 +8,7 @@ import diamond.run.core.impl.DefaultSingleImpl;
 import diamond.run.core.impl.Operators;
 import diamond.run.core.model.Array;
 import diamond.run.core.model.Function;
+import diamond.run.core.model.SingleFunction;
 import diamond.run.core.model.Value;
 import diamond.run.core.model.operator.SingleOperator;
 import diamond.run.jbridge.JavaFunctionArray;
@@ -16,12 +17,12 @@ import io.github.coalangsoft.reflect.Clss;
 
 public class Environment {
 	
-	public static void init(Scope scope){
+	public static void initGlobal(Scope scope){
 		scope.put("out", new JavaFunctionArray(
 			new Clss(System.out.getClass()).getMethods(System.out, "println")
 		));
 		scope.put("+", Operators.ADD);
-		scope.put("-", Operators.SUB);
+		scope.put("\\", Operators.SUB);
 		scope.put("*", Operators.MUL);
 		scope.put("%", Operators.DIV);
 		scope.put("!", new Function() {
@@ -44,9 +45,9 @@ public class Environment {
 				return this;
 			}
 		});
-		scope.put("range", new Function() {
+		scope.put("range", new SingleFunction() {
 			@Override
-			public Value take(Value v) {
+			public Value takeSingle(Value v) {
 				int len = (int) v.castNumber();
 				Value[] arr = new Value[len];
 				for(int i = 0; i < len; i++){
@@ -73,6 +74,9 @@ public class Environment {
 				return null;
 			}
 		});
+	}
+	
+	public static void init(Scope scope){
 		scope.put("$", new SingleOperator() {
 			@Override
 			public Value operateSingle(Value a, Value b) {

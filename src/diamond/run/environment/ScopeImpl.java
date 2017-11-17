@@ -2,6 +2,7 @@ package diamond.run.environment;
 
 import java.util.HashMap;
 
+import diamond.run.core.impl.Arrays;
 import diamond.run.core.model.Value;
 
 public class ScopeImpl implements Scope {
@@ -11,6 +12,7 @@ public class ScopeImpl implements Scope {
 	
 	{
 		values = new HashMap<>();
+		Environment.init(this);
 	}
 	
 	public ScopeImpl(){
@@ -32,12 +34,23 @@ public class ScopeImpl implements Scope {
 
 	@Override
 	public void put(String name, Value value) {
-		values.put(name, value);
+		Value v = values.get(name);
+		if(v != null){
+			v = Arrays.concat(v.castArray(), value.castArray());
+		}else{
+			v = value;
+		}
+		values.put(name, v);
 	}
 
 	@Override
 	public Scope chain() {
 		return new ScopeImpl(this);
+	}
+	
+	@Override
+	public String toString() {
+		return "ScopeImpl [values=" + values + ", parent=" + parent + "]";
 	}
 
 }

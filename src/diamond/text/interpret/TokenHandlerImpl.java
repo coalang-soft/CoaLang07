@@ -6,9 +6,7 @@ import java.util.ArrayList;
 
 import diamond.run.core.impl.ArrayImpl;
 import diamond.run.core.impl.DefaultSingleImpl;
-import diamond.run.core.model.Array;
 import diamond.run.core.model.Value;
-import diamond.run.environment.ReadOnlyScope;
 import diamond.run.environment.Scope;
 import diamond.text.tokenize.Token;
 import diamond.text.tokenize.TokenHandler;
@@ -62,11 +60,8 @@ public class TokenHandlerImpl implements TokenHandler {
 	private void handleInString(Token t) {
 		
 		if(unescaped){
-			unescaped = false;
-			if(stringBuilder.length() > 0){
-				stringBuilder.append(" ");
-			}
 			stringBuilder.append(t.raw());
+			unescaped = false;
 			return;
 		}
 		
@@ -81,7 +76,7 @@ public class TokenHandlerImpl implements TokenHandler {
 	}
 	
 	private void appendString(String t) {
-		if(t.equals("\\")){
+		if(t.equals("|")){
 			unescaped = true;
 			return;
 		}
