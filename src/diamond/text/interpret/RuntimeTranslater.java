@@ -1,11 +1,15 @@
 package diamond.text.interpret;
 
 import diamond.run.core.impl.ArrayImpl;
+import diamond.run.core.impl.DefaultSingleImpl;
 import diamond.run.core.model.Array;
+import diamond.run.core.model.Function;
+import diamond.run.core.model.Type;
 import diamond.run.core.model.Value;
 import diamond.run.environment.ArrayAtFunction;
 import diamond.run.environment.Scope;
 import diamond.run.environment.StoreConstFunction;
+import diamond.text.tokenize.Token;
 
 public class RuntimeTranslater {
 	
@@ -36,17 +40,36 @@ public class RuntimeTranslater {
 		feed(new StoreConstFunction(s));
 	}
 
-	public void arrayOp(Value op) {
+	public void arrayOp() {
 		Array a = current.castArray();
 		if(a.length() == 0){
 			current = new ArrayImpl();
 		}else{
-			Value v = a.get(0);
-			for(int i = 1; i < a.length(); i++){
-				v = op.take(v).take(a.get(i));
-			}
-			current = v;
+			current = new Function() {
+				@Override
+				public Value take(Value op) {
+					Value v = a.get(0);
+					for(int i = 1; i < a.length(); i++){
+						v = op.take(v).take(a.get(i));
+					}
+					return v;
+				}
+				
+				@Override
+				public Value callZeroArg() {
+					return this;
+				}
+			};
 		}
+	}
+
+	public boolean feedMacro(String t) {
+		if(current == null) return false;
+		if(current.getType() == Type.MACRO){
+			current = current.take(new DefaultSingleImpl(t));
+			return true;
+		}
+		return false;
 	}
 	
 }

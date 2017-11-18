@@ -52,9 +52,4 @@ public class JavaFunctionArray implements Array {
 		return new ArrayImpl(values);
 	}
 
-	@Override
-	public Value callZeroArg() {
-		return this;
-	}
-
 }

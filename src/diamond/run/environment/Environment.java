@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import diamond.run.core.impl.ArrayImpl;
 import diamond.run.core.impl.DefaultSingleImpl;
+import diamond.run.core.impl.MacroImpl;
 import diamond.run.core.impl.Operators;
 import diamond.run.core.model.Array;
 import diamond.run.core.model.Function;
@@ -25,6 +26,9 @@ public class Environment {
 		scope.put("\\", Operators.SUB);
 		scope.put("*", Operators.MUL);
 		scope.put("%", Operators.DIV);
+		scope.put("<", Operators.LSS);
+		scope.put(">", Operators.GTR);
+		scope.put("=", Operators.EQU);
 		scope.put("!", new Function() {
 			@Override
 			public Value take(Value v) {
@@ -72,6 +76,17 @@ public class Environment {
 			public Value callZeroArg() {
 				System.exit(0);
 				return null;
+			}
+		});
+		scope.put("'", new Function() {
+			@Override
+			public Value take(Value v) {
+				return new MacroImpl(v);
+			}
+			
+			@Override
+			public Value callZeroArg() {
+				return this;
 			}
 		});
 	}

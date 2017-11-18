@@ -5,7 +5,7 @@ public enum TokenCategory {
 	COLON(":"),
 	SEMICOLON(";"),
 	
-	NUMBER, LIST_OPERATION, NAME;
+	NUMBER, LIST_OPERATION, LIST_AT("?"), NAME;
 
 	private String look;
 

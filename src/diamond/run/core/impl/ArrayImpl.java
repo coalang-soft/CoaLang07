@@ -37,9 +37,4 @@ public class ArrayImpl implements Array {
 		return Arrays.toString(list);
 	}
 
-	@Override
-	public Value callZeroArg() {
-		return this;
-	}
-
 }

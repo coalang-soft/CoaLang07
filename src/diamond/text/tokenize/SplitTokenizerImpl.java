@@ -1,18 +1,13 @@
 package diamond.text.tokenize;
 
-public class TokenizerImpl implements Tokenizer{
+public class SplitTokenizerImpl implements Tokenizer{
 	
 	private String current = "";
 	
 	@Override
 	public Token feed(char c) {
 		if(Character.isWhitespace(c)){
-			if(!current.isEmpty()){
-				String s = current;
-				current = "";
-				return new TokenImpl(s);
-			}
-			return null;
+			return makeToken();
 		}else{
 			current += c;
 		}
@@ -21,16 +16,16 @@ public class TokenizerImpl implements Tokenizer{
 
 	@Override
 	public Token finish(){
-		Token t = finish0();
-		current = "";
-		return t;
+		return makeToken();
 	}
 	
-	private Token finish0() {
+	private Token makeToken() {
 		if(current.isEmpty()){
 			return null;
 		}
-		return new TokenImpl(current);
+		Token t = new TokenImpl(current);
+		current = "";
+		return t;
 	}
 	
 }

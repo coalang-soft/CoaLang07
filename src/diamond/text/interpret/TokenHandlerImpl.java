@@ -34,6 +34,11 @@ public class TokenHandlerImpl implements TokenHandler {
 			handleInBracket(t);
 			return;
 		}
+		if(!(t.getCategory() == TokenCategory.STR_OPEN)){
+			if(translater.feedMacro(t.raw())){
+				return;
+			}
+		}
 		switch(t.getCategory()){
 		case STR_OPEN: increaseStringDepth(1); break;
 		case STR_CLOSE: throw new RuntimeException("Negative String depth!");
@@ -41,19 +46,11 @@ public class TokenHandlerImpl implements TokenHandler {
 		case BRACKET_CLOSE: throw new RuntimeException("Negative Bracket depth!");
 		case NAME: translater.feed(scope.deepLookup(t.raw())); break;
 		case NUMBER: translater.feed(new DefaultSingleImpl(Double.parseDouble(t.raw()))); break;
-		case LIST_OPERATION: arrayOperation(t.raw().substring(1)); break;
+		case LIST_OPERATION: translater.arrayOp(); break;
 		case SEMICOLON: translater.finish(); break;
 		case COLON: translater.storeConst(scope); break;
+		case LIST_AT: translater.arrayAt(); break;
 		default: throw new RuntimeException(t.getCategory() + "");
-		}
-	}
-
-	private void arrayOperation(String spec) {
-		if(spec.isEmpty()){
-			translater.arrayAt();
-		}else{
-			Value op = scope.deepLookup(spec);
-			translater.arrayOp(op);
 		}
 	}
 

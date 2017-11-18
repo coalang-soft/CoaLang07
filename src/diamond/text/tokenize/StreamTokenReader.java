@@ -22,6 +22,7 @@ public class StreamTokenReader {
 					handler.handle(t);
 				}catch(RuntimeException e){
 					System.err.println("! " + e);
+//					e.printStackTrace();
 				}
 			}
 		}

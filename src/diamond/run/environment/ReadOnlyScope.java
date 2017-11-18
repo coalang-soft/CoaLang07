@@ -12,6 +12,9 @@ public interface ReadOnlyScope {
 		if(v != null){
 			return v;
 		}
+		if(parent() == null){
+			throw new RuntimeException("Variable " + name + " not found.");
+		}
 		return parent().deepLookup(name);
 	}
 	

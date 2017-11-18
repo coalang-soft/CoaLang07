@@ -30,6 +30,13 @@ public interface Array extends Value{
 		}
 		return makeArray(vs);
 	}
+	
+	default Value callZeroArg(){
+		if(length() == 1){
+			return get(0).callZeroArg();
+		}
+		return this;
+	}
 
 	int length();
 	Value get(int index);
