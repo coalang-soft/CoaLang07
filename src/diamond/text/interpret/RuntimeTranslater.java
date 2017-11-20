@@ -3,7 +3,7 @@ package diamond.text.interpret;
 import diamond.run.core.impl.ArrayImpl;
 import diamond.run.core.impl.DefaultSingleImpl;
 import diamond.run.core.model.Array;
-import diamond.run.core.model.Function;
+import diamond.run.core.model.SingleFunction;
 import diamond.run.core.model.Type;
 import diamond.run.core.model.Value;
 import diamond.run.environment.ArrayAtFunction;
@@ -44,9 +44,9 @@ public class RuntimeTranslater {
 		if(a.length() == 0){
 			current = new ArrayImpl();
 		}else{
-			current = new Function() {
+			current = new SingleFunction() {
 				@Override
-				public Value take(Value op) {
+				public Value takeSingle(Value op) {
 					Value v = a.get(0);
 					for(int i = 1; i < a.length(); i++){
 						v = op.take(v).take(a.get(i));

@@ -8,7 +8,7 @@ import diamond.run.core.impl.DefaultSingleImpl;
 import diamond.run.core.impl.MacroImpl;
 import diamond.run.core.impl.Operators;
 import diamond.run.core.model.Array;
-import diamond.run.core.model.Function;
+import diamond.run.core.model.ArrayFunction;
 import diamond.run.core.model.SingleFunction;
 import diamond.run.core.model.Value;
 import diamond.run.core.model.operator.SingleOperator;
@@ -29,9 +29,16 @@ public class Environment {
 		scope.put("<", Operators.LSS);
 		scope.put(">", Operators.GTR);
 		scope.put("=", Operators.EQU);
-		scope.put("!", new Function() {
+		scope.put(",", Operators.ARR_CONCAT);
+		scope.put("length", new ArrayFunction() {
 			@Override
-			public Value take(Value v) {
+			public Value takeArray(Array a) {
+				return new DefaultSingleImpl(a.length());
+			}
+		});
+		scope.put("!", new SingleFunction() {
+			@Override
+			public Value takeSingle(Value v) {
 				Array a = v.castArray();
 				Value[] res = new Value[a.length()];
 				for(int i = 0; i < a.length(); i++){
@@ -65,9 +72,9 @@ public class Environment {
 				return this;
 			}
 		});
-		scope.put("'", new Function() {
+		scope.put("'", new SingleFunction() {
 			@Override
-			public Value take(Value v) {
+			public Value takeSingle(Value v) {
 				return new MacroImpl(v);
 			}
 			
@@ -107,9 +114,33 @@ public class Environment {
 			public Value operateSingle(Value a, Value b) {
 				String code = a.toString();
 				String arg = b.toString();
-				return new Function() {
+				return new SingleFunction() {
 					@Override
-					public Value take(Value v) {
+					public Value takeSingle(Value v) {
+						Scope sc = scope.chain();
+						sc.put(arg, v);
+						try {
+							return GlobalInterpreter.interpret(new ByteArrayInputStream(code.getBytes()), sc);
+						} catch (IOException e) {
+							throw new RuntimeException(e);
+						}
+					}
+					
+					@Override
+					public Value callZeroArg() {
+						return this;
+					}
+				};
+			}
+		});
+		scope.put("$$", new SingleOperator() {
+			@Override
+			public Value operateSingle(Value a, Value b) {
+				String code = a.toString();
+				String arg = b.toString();
+				return new ArrayFunction() {
+					@Override
+					public Value takeArray(Array v) {
 						Scope sc = scope.chain();
 						sc.put(arg, v);
 						try {

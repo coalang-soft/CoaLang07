@@ -9,6 +9,8 @@ public interface Array extends Value{
 	default Value take(Value v){
 		if(v.getType() == Type.ARRAY){
 			return takeArray((Array) v);
+		}else if(v.getType() == Type.ARRAY_FUNCTION){
+			return v.take(this);
 		}else{
 			return takeSingle(v);
 		}

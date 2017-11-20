@@ -1,10 +1,10 @@
 package diamond.run.environment;
 
 import diamond.run.core.model.Array;
-import diamond.run.core.model.Function;
+import diamond.run.core.model.SingleFunction;
 import diamond.run.core.model.Value;
 
-public class ArrayAtFunction implements Function {
+public class ArrayAtFunction implements SingleFunction {
 
 	private Array array;
 
@@ -13,13 +13,13 @@ public class ArrayAtFunction implements Function {
 	}
 
 	@Override
-	public Value take(Value v) {
-		return array.get((int) v.castNumber());
+	public Value callZeroArg() {
+		return this;
 	}
 
 	@Override
-	public Value callZeroArg() {
-		return this;
+	public Value takeSingle(Value a) {
+		return array.get((int) a.castNumber());
 	}
 
 }

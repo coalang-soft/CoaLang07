@@ -1,12 +1,12 @@
 package diamond.run.core.model;
 
-public interface Macro extends Function {
+public interface Macro extends SingleFunction {
 	
 	default Type getType(){
 		return Type.MACRO;
 	}
 	
-	default Value take(Value v){
+	default Value takeSingle(Value v){
 		return takeString(v.get() + "");
 	}
 

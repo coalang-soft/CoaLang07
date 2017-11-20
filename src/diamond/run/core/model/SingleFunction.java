@@ -1,6 +1,6 @@
 package diamond.run.core.model;
 
-public interface SingleFunction extends Function {
+public interface SingleFunction extends Value {
 
 	default Value take(Value v){
 		if(v.getType() == Type.ARRAY){
@@ -11,5 +11,9 @@ public interface SingleFunction extends Function {
 	}
 	
 	Value takeSingle(Value a);
+	
+	default Type getType(){
+		return Type.SINGLE_FUNCTION;
+	}
 	
 }

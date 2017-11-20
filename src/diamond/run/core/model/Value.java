@@ -6,8 +6,12 @@ public interface Value {
 	
 	Type getType();
 	Value take(Value v);
-	Object get();
-	Value callZeroArg();
+	default Object get(){
+		return this;
+	}
+	default Value callZeroArg(){
+		return this;
+	}
 	
 	default Array castArray(){
 		if(this instanceof Array){

@@ -1,10 +1,20 @@
 package diamond.run.core.model.operator;
 
 import diamond.run.core.model.Array;
+import diamond.run.core.model.SingleFunction;
 import diamond.run.core.model.Type;
 import diamond.run.core.model.Value;
 
-public interface SingleOperator extends Operator {
+public interface SingleOperator extends SingleFunction {
+	
+	default Value takeSingle(Value a){
+		return new SingleFunction(){
+			@Override
+			public Value takeSingle(Value b) {
+				return operate(a,b);
+			}
+		};
+	}
 	
 	default Value operate(Value a, Value b){
 		if(a.getType() == Type.ARRAY || b.getType() == Type.ARRAY){

@@ -1,9 +1,28 @@
-[ ' ( [ [ code $ arg ] $ [ code ] ] $ [ arg ] ) ] :! [ lambda ] ;
-[ ' ( [ class java constructor ] $ [ class ] ) ] :! [ new ] ;
-[ java [ java.lang.System ] field [ out ] method [ println ] ? 1 ] :! [ out ] ;
 [ 1 ; 0 ] ! : [ TRUE ; FALSE ] ;
 
-[ PI ; E ] : [ MATH_CONSTANTS ] ;
-java [ java.lang.Math ] field MATH_CONSTANTS : MATH_CONSTANTS ;
+[ ( ; ) ; | s ; | [ ; | ] ] : [ BRACKET_OPEN ; BRACKET_CLOSE ; SPACE ; BRACE_OPEN ; BRACE_CLOSE ] ;
 
-[ ( ; ) ; | s ] : [ BRACKET_OPEN ; BRACKET_CLOSE ; SPACE ] ;
+[ [ x \ ( x range ) \ 1 ] $ [ x ] ] :! [ reverseRange ] ;
+[ [ a ? ( a length reverseRange ) ] $$ [ a ] ] :! [ reverse ] ;
+
+[
+	[
+		[
+			[ BRACE_OPEN strConcat SPACE ] $ [ x ] arg / strConcat strConcat functionContent
+			strConcat (
+				[ SPACE strConcat BRACE_CLOSE strConcat SPACE strConcat [ $ ] strConcat SPACE strConcat BRACE_OPEN strConcat SPACE strConcat x strConcat SPACE strConcat BRACE_CLOSE ]
+				$ [ x ]	( arg reverse ) / strConcat
+			)
+		] $$ [ arg ]
+	] $ [ functionContent ]
+] :! [ withCode ] ;
+[ [ [ withCode functionContent arg ! ] $$ [ arg ] ] $ [ functionContent ] ] :! [ with ] ;
+
+[ object method property ? argcount ] withCode [ property ; argcount ; object ] :! [ fromMethod ] ;
+[ fromMethod property argcount ] withCode [ argcount ; property ] :! [ fromMethods ] ;
+[ [ fromMethod ] strConcat SPACE strConcat BRACE_OPEN strConcat SPACE strConcat name strConcat SPACE strConcat BRACE_CLOSE strConcat SPACE strConcat argcount ] withCode [ name ; argcount ] :! [ fromMethodCode ] ;
+
+[ value : name ] withCode [ name ; value ] :! [ :: ] ;
+
+[ toUpperCase ; toLowerCase ] : [ USED_METHODS ] ;
+fromMethodCode USED_METHODS 0 :! USED_METHODS ;

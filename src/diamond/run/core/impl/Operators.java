@@ -1,5 +1,6 @@
 package diamond.run.core.impl;
 
+import diamond.run.core.model.operator.ArrayOperator;
 import diamond.run.core.model.operator.NumberOperator;
 import diamond.run.core.model.operator.SingleOperator;
 
@@ -15,5 +16,7 @@ public interface Operators {
 	NumberOperator LSS = (a,b) -> a<b?1:0;
 	NumberOperator GTR = (a,b) -> a>b?1:0;
 	SingleOperator EQU = (a,b) -> new DefaultSingleImpl(a.get().equals(b.get())?1:0);
+	
+	ArrayOperator ARR_CONCAT = (a,b) -> Arrays.concat(a,b);
 	
 }
