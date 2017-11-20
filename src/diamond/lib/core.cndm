@@ -1,0 +1,9 @@
+[ ' ( [ [ code $ arg ] $ [ code ] ] $ [ arg ] ) ] :! [ lambda ] ;
+[ ' ( [ class java constructor ] $ [ class ] ) ] :! [ new ] ;
+[ java [ java.lang.System ] field [ out ] method [ println ] ? 1 ] :! [ out ] ;
+[ 1 ; 0 ] ! : [ TRUE ; FALSE ] ;
+
+[ PI ; E ] : [ MATH_CONSTANTS ] ;
+java [ java.lang.Math ] field MATH_CONSTANTS : MATH_CONSTANTS ;
+
+[ ( ; ) ; | s ] : [ BRACKET_OPEN ; BRACKET_CLOSE ; SPACE ] ;

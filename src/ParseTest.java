@@ -11,6 +11,7 @@ public class ParseTest {
 		Scope s = new ScopeImpl();
 		Environment.initGlobal(s);
 		
+		GlobalInterpreter.interpret(ParseTest.class.getResourceAsStream("/diamond/lib/core.cndm"), s);
 		GlobalInterpreter.interpret(System.in, s);
 	}
 	

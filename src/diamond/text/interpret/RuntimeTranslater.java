@@ -9,7 +9,6 @@ import diamond.run.core.model.Value;
 import diamond.run.environment.ArrayAtFunction;
 import diamond.run.environment.Scope;
 import diamond.run.environment.StoreConstFunction;
-import diamond.text.tokenize.Token;
 
 public class RuntimeTranslater {
 	

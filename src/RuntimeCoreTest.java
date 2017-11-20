@@ -4,7 +4,6 @@ import diamond.run.core.impl.ArrayImpl;
 import diamond.run.core.impl.DefaultSingleImpl;
 import diamond.run.core.impl.Operators;
 import diamond.run.core.model.Value;
-import diamond.run.core.model.operator.NumberOperator;
 
 public class RuntimeCoreTest {
 	

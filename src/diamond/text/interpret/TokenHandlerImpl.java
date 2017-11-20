@@ -48,7 +48,6 @@ public class TokenHandlerImpl implements TokenHandler {
 		case NUMBER: translater.feed(new DefaultSingleImpl(Double.parseDouble(t.raw()))); break;
 		case LIST_OPERATION: translater.arrayOp(); break;
 		case SEMICOLON: translater.finish(); break;
-		case COLON: translater.storeConst(scope); break;
 		case LIST_AT: translater.arrayAt(); break;
 		default: throw new RuntimeException(t.getCategory() + "");
 		}
@@ -57,7 +56,10 @@ public class TokenHandlerImpl implements TokenHandler {
 	private void handleInString(Token t) {
 		
 		if(unescaped){
-			stringBuilder.append(t.raw());
+			switch(t.raw()) {
+			case "s": stringBuilder.append(" "); break;
+			default: stringBuilder.append(t.raw());
+			}
 			unescaped = false;
 			return;
 		}

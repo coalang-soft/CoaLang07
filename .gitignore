@@ -2,3 +2,5 @@
 .gitattributes
 .classpath
 bin
+.idea/
+*.iml

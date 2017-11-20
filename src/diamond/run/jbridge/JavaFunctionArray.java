@@ -5,15 +5,14 @@ import java.util.ArrayList;
 import diamond.run.core.impl.ArrayImpl;
 import diamond.run.core.model.Array;
 import diamond.run.core.model.Value;
-
-import io.github.coalangsoft.reflect.SpecificMethod;
-import io.github.coalangsoft.reflect.SpecificMethods;
+import io.github.coalangsoft.reflect.MultipleCallableSequence;
+import io.github.coalangsoft.reflect.SingleCallable;
 
 public class JavaFunctionArray implements Array {
 
-	private SpecificMethods methods;
+	private MultipleCallableSequence<? extends SingleCallable,?> methods;
 
-	public JavaFunctionArray(SpecificMethods methods) {
+	public JavaFunctionArray(MultipleCallableSequence<? extends SingleCallable,?> methods) {
 		this.methods = methods;
 	}
 
@@ -35,7 +34,7 @@ public class JavaFunctionArray implements Array {
 
 	@Override
 	public Value get(int index) {
-		ArrayList<SpecificMethod> ms = new ArrayList<>();
+		ArrayList<SingleCallable> ms = new ArrayList<>();
 		
 		int[] counts = methods.getParameterCounts();
 		for(int i = 0; i < counts.length; i++){
@@ -44,7 +43,7 @@ public class JavaFunctionArray implements Array {
 			}
 		}
 		
-		return new JavaFunction(ms.toArray(new SpecificMethod[0]), index);
+		return new JavaFunction(ms.toArray(new SingleCallable[0]), index);
 	}
 
 	@Override

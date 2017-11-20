@@ -2,7 +2,6 @@ package diamond.text.interpret;
 
 public enum TokenCategory {
 	STR_OPEN("["), STR_CLOSE("]"), BRACKET_OPEN("("), BRACKET_CLOSE(")"),
-	COLON(":"),
 	SEMICOLON(";"),
 	
 	NUMBER, LIST_OPERATION, LIST_AT("?"), NAME;
@@ -25,7 +24,7 @@ public enum TokenCategory {
 				}
 			}
 		}
-		if(Character.isDigit(raw.charAt(0)) || raw.charAt(0) == '-'){
+		if(Character.isDigit(raw.charAt(0)) || raw.charAt(0) == '-' || raw.charAt(0) == '.'){
 			return NUMBER;
 		}
 		if(raw.charAt(0) == '/'){

@@ -12,20 +12,20 @@ import diamond.run.core.model.Function;
 import diamond.run.core.model.SingleFunction;
 import diamond.run.core.model.Value;
 import diamond.run.core.model.operator.SingleOperator;
-import diamond.run.jbridge.JavaFunctionArray;
+import diamond.run.jbridge.ConstructorFunction;
+import diamond.run.jbridge.FieldFunction;
+import diamond.run.jbridge.JavaClass;
+import diamond.run.jbridge.MethodFunction;
 import diamond.text.interpret.GlobalInterpreter;
-import io.github.coalangsoft.reflect.Clss;
 
 public class Environment {
 	
 	public static void initGlobal(Scope scope){
-		scope.put("out", new JavaFunctionArray(
-			new Clss(System.out.getClass()).getMethods(System.out, "println")
-		));
 		scope.put("+", Operators.ADD);
 		scope.put("\\", Operators.SUB);
 		scope.put("*", Operators.MUL);
 		scope.put("%", Operators.DIV);
+		scope.put("^", Operators.POW);
 		scope.put("<", Operators.LSS);
 		scope.put(">", Operators.GTR);
 		scope.put("=", Operators.EQU);
@@ -65,19 +65,6 @@ public class Environment {
 				return this;
 			}
 		});
-		scope.put("exit", new Function() {
-			@Override
-			public Value take(Value v) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public Value callZeroArg() {
-				System.exit(0);
-				return null;
-			}
-		});
 		scope.put("'", new Function() {
 			@Override
 			public Value take(Value v) {
@@ -89,6 +76,29 @@ public class Environment {
 				return this;
 			}
 		});
+		scope.put("strConcat", new SingleOperator() {
+			@Override
+			public Value operateSingle(Value a, Value b) {
+				return new DefaultSingleImpl(a.get() + "" + b.get());
+			}
+		});
+		
+		//Java bridge
+		scope.put("java", new SingleFunction() {
+			
+			@Override
+			public Value callZeroArg() {
+				return this;
+			}
+
+			@Override
+			public Value takeSingle(Value a) {
+				return new JavaClass(a.get() + "");
+			}
+		});
+		scope.put("field", new FieldFunction());
+		scope.put("constructor", new ConstructorFunction());
+		scope.put("method", new MethodFunction());
 	}
 	
 	public static void init(Scope scope){
@@ -116,6 +126,8 @@ public class Environment {
 				};
 			}
 		});
+		scope.put(":", new StoreConstFunction(scope));
+		scope.put(":!", new StoreConstFunction2(scope));
 	}
 	
 }
