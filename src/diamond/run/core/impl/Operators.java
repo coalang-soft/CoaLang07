@@ -6,17 +6,17 @@ import diamond.run.core.model.operator.SingleOperator;
 
 public interface Operators {
 	
-	NumberOperator ADD = (a,b) -> a + b;
-	NumberOperator SUB = (a,b) -> a - b;
-	NumberOperator MUL = (a,b) -> a * b;
-	NumberOperator DIV = (a,b) -> a / b;
-	NumberOperator POW = Math::pow;
-	NumberOperator MOD = (a,b) -> a % b;
+	NumberOperator ADD = (s,a,b) -> a + b;
+	NumberOperator SUB = (s,a,b) -> a - b;
+	NumberOperator MUL = (s,a,b) -> a * b;
+	NumberOperator DIV = (s,a,b) -> a / b;
+	NumberOperator POW = (s,a,b) -> Math.pow(a,b);
+	NumberOperator MOD = (s,a,b) -> a % b;
 	
-	NumberOperator LSS = (a,b) -> a<b?1:0;
-	NumberOperator GTR = (a,b) -> a>b?1:0;
-	SingleOperator EQU = (a,b) -> new DefaultSingleImpl(a.get().equals(b.get())?1:0);
+	NumberOperator LSS = (s,a,b) -> a<b?1:0;
+	NumberOperator GTR = (s,a,b) -> a>b?1:0;
+	SingleOperator EQU = (s,a,b) -> new DefaultSingleImpl(a.get().equals(b.get())?1:0);
 	
-	ArrayOperator ARR_CONCAT = (a,b) -> Arrays.concat(a,b);
+	ArrayOperator ARR_CONCAT = (s,a,b) -> Arrays.concat(a,b);
 	
 }

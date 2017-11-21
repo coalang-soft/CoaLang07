@@ -35,7 +35,7 @@ public class TokenHandlerImpl implements TokenHandler {
 			return;
 		}
 		if(!(t.getCategory() == TokenCategory.STR_OPEN)){
-			if(translater.feedMacro(t.raw())){
+			if(translater.feedMacro(scope, t.raw())){
 				return;
 			}
 		}
@@ -44,11 +44,9 @@ public class TokenHandlerImpl implements TokenHandler {
 		case STR_CLOSE: throw new RuntimeException("Negative String depth!");
 		case BRACKET_OPEN: increaseBracketDepth(1); break;
 		case BRACKET_CLOSE: throw new RuntimeException("Negative Bracket depth!");
-		case NAME: translater.feed(scope.deepLookup(t.raw())); break;
-		case NUMBER: translater.feed(new DefaultSingleImpl(Double.parseDouble(t.raw()))); break;
-		case LIST_OPERATION: translater.arrayOp(); break;
+		case NAME: translater.feed(scope, scope.deepLookup(t.raw())); break;
+		case NUMBER: translater.feed(scope, new DefaultSingleImpl(Double.parseDouble(t.raw()))); break;
 		case SEMICOLON: translater.finish(); break;
-		case LIST_AT: translater.arrayAt(); break;
 		default: throw new RuntimeException(t.getCategory() + "");
 		}
 	}
@@ -103,7 +101,7 @@ public class TokenHandlerImpl implements TokenHandler {
 			switch(closer){
 			case BRACKET_CLOSE: try {
 					translater.feed(
-							GlobalInterpreter.interpret(new ByteArrayInputStream(stringBuilder.toString().getBytes()), scope)
+							scope, GlobalInterpreter.interpret(new ByteArrayInputStream(stringBuilder.toString().getBytes()), scope)
 						);
 				} catch (IOException e) {
 					//Should not happen
@@ -119,7 +117,7 @@ public class TokenHandlerImpl implements TokenHandler {
 					strings[i] = new DefaultSingleImpl(stringList.get(i));
 				}
 				stringList.clear();
-				translater.feed(new ArrayImpl(strings)); stringBuilder = new StringBuilder(); break;
+				translater.feed(scope, new ArrayImpl(strings)); stringBuilder = new StringBuilder(); break;
 			default: throw new RuntimeException("State finishing not yet implemented for " + closer);
 			}
 		}else if(closer == TokenCategory.STR_CLOSE){

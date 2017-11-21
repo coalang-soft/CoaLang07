@@ -1,11 +1,12 @@
 package diamond.run.core.model;
 
 import diamond.run.core.impl.ArrayImpl;
+import diamond.run.environment.Scope;
 
 public interface Value {
 	
 	Type getType();
-	Value take(Value v);
+	Value take(Scope s, Value v);
 	default Object get(){
 		return this;
 	}

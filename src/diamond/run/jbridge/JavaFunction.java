@@ -2,6 +2,7 @@ package diamond.run.jbridge;
 
 import diamond.run.core.model.SingleFunction;
 import diamond.run.core.model.Value;
+import diamond.run.environment.Scope;
 import io.github.coalangsoft.reflect.AbstractMultipleCallableSequence;
 import io.github.coalangsoft.reflect.CasterImpl;
 import io.github.coalangsoft.reflect.SingleCallable;
@@ -17,7 +18,7 @@ public class JavaFunction implements SingleFunction {
 	}
 
 	@Override
-	public Value takeSingle(Value v) {
+	public Value takeSingle(Scope s, Value v) {
 		if(argCount == 1){
 			return JavaValues.make(new AbstractMultipleCallableSequence(array).call(new Object[]{v.get()}, new CasterImpl()));
 		}else{

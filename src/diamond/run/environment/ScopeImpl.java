@@ -12,7 +12,6 @@ public class ScopeImpl implements Scope {
 	
 	{
 		values = new HashMap<>();
-		Environment.init(this);
 	}
 	
 	public ScopeImpl(){

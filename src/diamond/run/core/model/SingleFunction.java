@@ -1,16 +1,18 @@
 package diamond.run.core.model;
 
+import diamond.run.environment.Scope;
+
 public interface SingleFunction extends Value {
 
-	default Value take(Value v){
+	default Value take(Scope s, Value v){
 		if(v.getType() == Type.ARRAY){
-			return v.take(this);
+			return v.take(s, this);
 		}else{
-			return takeSingle(v);
+			return takeSingle(s, v);
 		}
 	}
 	
-	Value takeSingle(Value a);
+	Value takeSingle(Scope s, Value a);
 	
 	default Type getType(){
 		return Type.SINGLE_FUNCTION;

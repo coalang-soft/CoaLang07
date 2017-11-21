@@ -3,22 +3,19 @@ package diamond.run.core.model.operator;
 import diamond.run.core.model.Array;
 import diamond.run.core.model.ArrayFunction;
 import diamond.run.core.model.Value;
+import diamond.run.environment.Scope;
 
 public interface ArrayOperator extends ArrayFunction {
-	
-	default Value operate(Value a, Value b){
-		return arrayOperate(a.castArray(), b.castArray());
-	}
 
-	default Value takeArray(Array a){
+	default Value takeArray(Scope s, Array a){
 		return new ArrayFunction() {
 			@Override
-			public Value takeArray(Array b) {
-				return arrayOperate(a,b);
+			public Value takeArray(Scope s, Array b) {
+				return arrayOperate(s,a,b);
 			}
 		};
 	}
 	
-	Value arrayOperate(Array a, Array b);
+	Value arrayOperate(Scope s, Array a, Array b);
 	
 }

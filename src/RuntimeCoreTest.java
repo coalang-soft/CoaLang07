@@ -12,11 +12,11 @@ public class RuntimeCoreTest {
 		Value b = new DefaultSingleImpl(2);
 		Value arr = new ArrayImpl(a,b);
 		
-		Value res1 = arr.take(Operators.ADD);
+		Value res1 = arr.take(null, Operators.ADD);
 		
 		System.out.println(res1);
 		
-		Value res2 = res1.take(new ArrayImpl(
+		Value res2 = res1.take(null, new ArrayImpl(
 			new DefaultSingleImpl(2.5)
 		));
 		System.out.println(res2);

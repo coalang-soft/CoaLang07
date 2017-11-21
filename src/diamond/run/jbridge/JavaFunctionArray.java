@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import diamond.run.core.impl.ArrayImpl;
 import diamond.run.core.model.Array;
 import diamond.run.core.model.Value;
+import diamond.run.environment.Scope;
 import io.github.coalangsoft.reflect.MultipleCallableSequence;
 import io.github.coalangsoft.reflect.SingleCallable;
 
@@ -17,7 +18,7 @@ public class JavaFunctionArray implements Array {
 	}
 
 	@Override
-	public Value take(Value v) {
+	public Value take(Scope s, Value v) {
 		// TODO Auto-generated method stub
 		return null;
 	}

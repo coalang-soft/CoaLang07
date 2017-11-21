@@ -1,28 +1,25 @@
-[ 1 ; 0 ] ! : [ TRUE ; FALSE ] ;
-
+[ 1 ; 0 ; strConcat ] :! [ TRUE ; FALSE ; ,, ] ;
 [ ( ; ) ; | s ; | [ ; | ] ] : [ BRACKET_OPEN ; BRACKET_CLOSE ; SPACE ; BRACE_OPEN ; BRACE_CLOSE ] ;
 
 [ [ x \ ( x range ) \ 1 ] $ [ x ] ] :! [ reverseRange ] ;
 [ [ a ? ( a length reverseRange ) ] $$ [ a ] ] :! [ reverse ] ;
 
 [
-	[
+	[ [
 		[
-			[ BRACE_OPEN strConcat SPACE ] $ [ x ] arg / strConcat strConcat functionContent
-			strConcat (
-				[ SPACE strConcat BRACE_CLOSE strConcat SPACE strConcat [ $ ] strConcat SPACE strConcat BRACE_OPEN strConcat SPACE strConcat x strConcat SPACE strConcat BRACE_CLOSE ]
-				$ [ x ]	( arg reverse ) / strConcat
+			[ BRACE_OPEN ,, SPACE ] $ [ x ] arg / ,, ,, functionContent
+			,, (
+				[ SPACE ,, BRACE_CLOSE ,, SPACE ,, functionBuilder ,, SPACE ,, BRACE_OPEN ,, SPACE ,, x ,, SPACE ,, BRACE_CLOSE ]
+				$ [ x ]	( arg reverse ) / ,,
 			)
 		] $$ [ arg ]
-	] $ [ functionContent ]
+	] $ [ functionContent ] ] $ [ functionBuilder ]
 ] :! [ withCode ] ;
-[ [ [ withCode functionContent arg ! ] $$ [ arg ] ] $ [ functionContent ] ] :! [ with ] ;
 
-[ object method property ? argcount ] withCode [ property ; argcount ; object ] :! [ fromMethod ] ;
-[ fromMethod property argcount ] withCode [ argcount ; property ] :! [ fromMethods ] ;
-[ [ fromMethod ] strConcat SPACE strConcat BRACE_OPEN strConcat SPACE strConcat name strConcat SPACE strConcat BRACE_CLOSE strConcat SPACE strConcat argcount ] withCode [ name ; argcount ] :! [ fromMethodCode ] ;
+[ withCode [ $ ] ; withCode [ $$ ] ; withCode [ ' ] ] :! [ withSingleCode ; withArrayCode ; withMacroCode ] ;
+[ [ [ withSingleCode code args ! ] $$ [ args ] ] $ [ code ] ] :! [ withSingle ] ;
+[ [ [ withArrayCode code args ! ] $$ [ args ] ] $ [ code ] ] :! [ withArray ] ;
+[ [ [ withMacroCode code args ! ] $$ [ args ] ] $ [ code ] ] :! [ withMacro ] ;
 
-[ value : name ] withCode [ name ; value ] :! [ :: ] ;
-
-[ toUpperCase ; toLowerCase ] : [ USED_METHODS ] ;
-fromMethodCode USED_METHODS 0 :! USED_METHODS ;
+[ [ [ ,, array separator / ,, ] $ [ separator ] ] $$ [ array ] ] :! [ join ] ;
+[ BRACE_OPEN , value , BRACE_CLOSE , [ :! ] , BRACE_OPEN , name , BRACE_CLOSE join SPACE ] withMacroCode [ name ; equals ; value ] :! [ let ] ;

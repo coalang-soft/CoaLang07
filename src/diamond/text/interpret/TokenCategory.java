@@ -4,7 +4,7 @@ public enum TokenCategory {
 	STR_OPEN("["), STR_CLOSE("]"), BRACKET_OPEN("("), BRACKET_CLOSE(")"),
 	SEMICOLON(";"),
 	
-	NUMBER, LIST_OPERATION, LIST_AT("?"), NAME;
+	NUMBER, /*LIST_OPERATION, LIST_AT("?"),*/ NAME;
 
 	private String look;
 
@@ -27,9 +27,9 @@ public enum TokenCategory {
 		if(Character.isDigit(raw.charAt(0)) || raw.charAt(0) == '-' || raw.charAt(0) == '.'){
 			return NUMBER;
 		}
-		if(raw.charAt(0) == '/'){
-			return TokenCategory.LIST_OPERATION;
-		}
+//		if(raw.charAt(0) == '/'){
+//			return TokenCategory.LIST_OPERATION;
+//		}
 		return NAME;
 	}
 
