@@ -1,9 +1,20 @@
-[ 1 ; 0 ; strConcat ] :! [ TRUE ; FALSE ; ,, ] ;
-[ ( ; ) ; | s ; | [ ; | ] ] : [ BRACKET_OPEN ; BRACKET_CLOSE ; SPACE ; BRACE_OPEN ; BRACE_CLOSE ] ;
+[ [
+	[ /* ] , [ [ ] ] ? ( c = [ */ ] ) !
+] ' [ c ] ] :! [ /* ] ;
 
+/* true and false */ ;
+[ 1 ; 0 ; strConcat ] :! [ TRUE ; FALSE ; ,, ] ;
+
+/* special string constants for code generation */ ;
+[ ( ; ) ; | s ; | [ ; | ] ; | ; ] : [ BRACKET_OPEN ; BRACKET_CLOSE ; SPACE ; BRACE_OPEN ; BRACE_CLOSE ; SEMICOLON ] ;
+
+/* reverseRange. "reverseRange 3" is [2,1,0]. */ ;
 [ [ x \ ( x range ) \ 1 ] $ [ x ] ] :! [ reverseRange ] ;
+
+/* reverse. "reverse [a,b,c]" is [c,b,a]. */ ;
 [ [ a ? ( a length reverseRange ) ] $$ [ a ] ] :! [ reverse ] ;
 
+/* withCode. Generates function code using a functionBuilder ($ $$ ' etc.), the functions code and an arguments array. */ ;
 [
 	[ [
 		[
@@ -16,10 +27,16 @@
 	] $ [ functionContent ] ] $ [ functionBuilder ]
 ] :! [ withCode ] ;
 
+/* withSingle, withArray, withMacro */ ;
 [ withCode [ $ ] ; withCode [ $$ ] ; withCode [ ' ] ] :! [ withSingleCode ; withArrayCode ; withMacroCode ] ;
 [ [ [ withSingleCode code args ! ] $$ [ args ] ] $ [ code ] ] :! [ withSingle ] ;
 [ [ [ withArrayCode code args ! ] $$ [ args ] ] $ [ code ] ] :! [ withArray ] ;
-[ [ [ withMacroCode code args ! ] $$ [ args ] ] $ [ code ] ] :! [ withMacro ] ;
+[ [ [ withMacroCode code args ! ] $ [ code ] ] $$ [ args ] ] :! [ withMacro ] ;
 
-[ [ [ ,, array separator / ,, ] $ [ separator ] ] $$ [ array ] ] :! [ join ] ;
+/* let. let name = value ; generates code that stores the value (macro argument) in the variable name (macro argument) */ ;
 [ BRACE_OPEN , value , BRACE_CLOSE , [ :! ] , BRACE_OPEN , name , BRACE_CLOSE join SPACE ] withMacroCode [ name ; equals ; value ] :! [ let ] ;
+
+/* def. def name arguments code ; generates code that stores a function with parameters arguments (array) and code code (string) in the variable name (macro argument) */ ;
+let def = [
+	[ [ [ BRACE_OPEN , ( content withSingleCode args ) , BRACE_CLOSE , [ :! ] , BRACE_OPEN , name , BRACE_CLOSE join SPACE ] $ [ content ] ] $$ [ args ] ] ' [ name ]
+] ! ;

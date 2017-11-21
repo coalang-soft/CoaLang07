@@ -2,6 +2,7 @@ package diamond.run.environment;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.Iterator;
 
 import diamond.run.core.impl.ArrayImpl;
 import diamond.run.core.impl.DefaultSingleImpl;
@@ -77,6 +78,21 @@ public class Environment {
 			@Override
 			public Value operateSingle(Scope s, Value a, Value b) {
 				return new DefaultSingleImpl(a.get() + "" + b.get());
+			}
+		});
+		global.put("join", new ArrayFunction() {
+			@Override
+			public Value takeArray(Scope s, Array arr) {
+				return new SingleFunction() {
+					@Override
+					public Value takeSingle(Scope s, Value sep) {
+						String[] strs = new String[arr.length()];
+						for(int i = 0; i < arr.length(); i++){
+							strs[i] = arr.get(i).get() + "";
+						}
+						return new DefaultSingleImpl(String.join(sep.get() + "", strs));
+					}
+				};
 			}
 		});
 		
