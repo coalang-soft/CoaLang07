@@ -31,7 +31,7 @@ public class JavaFunction implements SingleFunction {
 	@Override
 	public Value callZeroArg() {
 		if(argCount == arguments.length){
-			return JavaValues.make(new AbstractMultipleCallableSequence(array).call(arguments));
+			return JavaValues.make(new AbstractMultipleCallableSequence(array).call(arguments, new CasterImpl()));
 		}
 		return this;
 	}

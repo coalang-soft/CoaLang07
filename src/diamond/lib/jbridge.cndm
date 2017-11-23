@@ -1,0 +1,3 @@
+[ [ [ object method methodName ] ' [ methodName ] ] $ [ object ] ] :! [ @ ] ;
+[ [ [ object field fieldName ] ' [ fieldName ] ] $ [ object ] ] :! [ # ] ;
+[ [ classname java constructor ] ' [ classname ] ] :! [ new ] ;

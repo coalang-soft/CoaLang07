@@ -1,5 +1,6 @@
 package diamond.run.jbridge;
 
+import diamond.run.core.impl.ArrayImpl;
 import diamond.run.core.model.Value;
 import diamond.run.core.model.operator.SingleOperator;
 import diamond.run.environment.Scope;
@@ -13,13 +14,13 @@ public class FieldFunction implements SingleOperator {
 			try {
 				return JavaValues.make(((Clss) obj.get()).getField(field.toString()).get(null));
 			} catch (IllegalArgumentException | IllegalAccessException e) {
-				throw new RuntimeException(e);
+				return new ArrayImpl();
 			}
 		}else{
 			try {
-				return JavaValues.make(((Clss) obj.get()).getField(field.toString()).get(obj.get()));
+				return JavaValues.make((new Clss(obj.get().getClass())).getField(field.toString()).get(obj.get()));
 			} catch (IllegalArgumentException | IllegalAccessException e) {
-				throw new RuntimeException(e);
+				return new ArrayImpl();
 			}
 		}
 	}

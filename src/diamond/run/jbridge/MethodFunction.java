@@ -1,5 +1,6 @@
 package diamond.run.jbridge;
 
+import diamond.run.core.impl.ArrayImpl;
 import diamond.run.core.model.Value;
 import diamond.run.core.model.operator.SingleOperator;
 import diamond.run.environment.Scope;
@@ -13,13 +14,13 @@ public class MethodFunction implements SingleOperator{
 			try {
 				return new JavaFunctionArray(((Clss) obj.get()).getMethods(null, method.toString()));
 			} catch (IllegalArgumentException e) {
-				throw new RuntimeException(e);
+				return new ArrayImpl();
 			}
 		}else{
 			try {
 				return new JavaFunctionArray((new Clss(obj.get().getClass())).getMethods(obj.get(), method.toString()));
 			} catch (IllegalArgumentException e) {
-				throw new RuntimeException(e);
+				return new ArrayImpl();
 			}
 		}
 	}
