@@ -1,5 +1,7 @@
 package diamond.run.jbridge;
 
+import java.util.Arrays;
+
 import diamond.run.core.model.SingleFunction;
 import diamond.run.core.model.Value;
 import diamond.run.environment.Scope;
@@ -11,25 +13,25 @@ public class JavaFunction implements SingleFunction {
 
 	private SingleCallable[] array;
 	private int argCount;
+	private Object[] arguments;
 
-	public JavaFunction(SingleCallable[] array, int argCount) {
+	public JavaFunction(SingleCallable[] array, int argCount, Object... arguments) {
 		this.array = array;
 		this.argCount = argCount;
+		this.arguments = arguments;
 	}
 
 	@Override
 	public Value takeSingle(Scope s, Value v) {
-		if(argCount == 1){
-			return JavaValues.make(new AbstractMultipleCallableSequence(array).call(new Object[]{v.get()}, new CasterImpl()));
-		}else{
-			throw new RuntimeException("NIy");
-		}
+		Object[] copy = Arrays.copyOf(arguments, arguments.length + 1);;
+		copy[copy.length - 1] = v.get();
+		return new JavaFunction(array, argCount, copy);
 	}
 
 	@Override
 	public Value callZeroArg() {
-		if(argCount == 0){
-			return JavaValues.make(new AbstractMultipleCallableSequence(array).call(new Object[0]));
+		if(argCount == arguments.length){
+			return JavaValues.make(new AbstractMultipleCallableSequence(array).call(arguments));
 		}
 		return this;
 	}

@@ -18,12 +18,6 @@ public class JavaFunctionArray implements Array {
 	}
 
 	@Override
-	public Value take(Scope s, Value v) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Object get() {
 		return methods;
 	}
