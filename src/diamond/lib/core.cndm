@@ -1,6 +1,14 @@
 [ [
-	[ /* ] , [ [ ] ] ? ( c = [ */ ] ) !
+	[ /* ] , [ [ ] ] arrayAt ( c = [ */ ] ) !
 ] ' [ c ] ] :! [ /* ] ;
+
+/* ?index. generates the index accessed with ? */ ;
+[ [ [ [ index ] , [ array length + index ] arrayAt ( index < 0 ) ! ] $ [ index ] ] $$ [ array ] ] :! [ ?index ] ;
+/* ?. The "arrayAt" function with negative indexes */ ;
+[ [ [ array arrayAt ( ?index array index ) ] $ [ index ] ] $$ [ array ] ] :! [ ? ] ;
+
+/* abs. */ ;
+[ [ [ num ] , [ 0 \ num ] ? ( num < 0 ) ! ] $ [ num ] ] :! [ abs ] ;
 
 /* true and false */ ;
 [ 1 ; 0 ; strConcat ] :! [ TRUE ; FALSE ; ,, ] ;
@@ -34,7 +42,7 @@
 [ [ [ withMacroCode code args ! ] $$ [ args ] ] $ [ code ] ] :! [ withMacro ] ;
 
 /* let. let name = value ; generates code that stores the value (macro argument) in the variable name (macro argument) */ ;
-[ BRACE_OPEN , value , BRACE_CLOSE , [ :! ] , BRACE_OPEN , name , BRACE_CLOSE join SPACE ] withMacroCode [ name ; equals ; value ] :! [ let ] ;
+[ [ BRACE_OPEN , value , BRACE_CLOSE , [ :! ] , BRACE_OPEN , name , BRACE_CLOSE join SPACE ] $ [ value ] ] withMacroCode [ name ; equals ] :! [ let ] ;
 
 /* def. "def name arguments code ;" generates code that stores a function with parameters arguments (array) and code code (string) in the variable name (macro argument) */ ;
 let def = [

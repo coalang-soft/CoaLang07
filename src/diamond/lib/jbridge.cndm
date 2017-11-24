@@ -1,3 +1,5 @@
-[ [ [ object method methodName ] ' [ methodName ] ] $ [ object ] ] :! [ @ ] ;
-[ [ [ object field fieldName ] ' [ fieldName ] ] $ [ object ] ] :! [ # ] ;
-[ [ classname java constructor ] ' [ classname ] ] :! [ new ] ;
+let @ = [ [ [ object method methodName ] ' [ methodName ] ] $ [ object ] ] ! ;
+let # = [ [ [ object field fieldName ] ' [ fieldName ] ] $ [ object ] ] ! ;
+let new = [ [ classname java constructor ] ' [ classname ] ] ! ;
+let class = [ [ classname java ] ' [ classname ] ] ! ;
+let import = [ [ classname @ split ? 1 [ \. ] ? -1 let = ( [ class ] , classname join SPACE ) ] ' [ classname ] ] ! ;
