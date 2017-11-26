@@ -13,6 +13,8 @@ public class ParseTest {
 		
 		GlobalInterpreter.interpret(ParseTest.class.getResourceAsStream("/diamond/lib/core.cndm"), s);
 		GlobalInterpreter.interpret(ParseTest.class.getResourceAsStream("/diamond/lib/jbridge.cndm"), s);
+		GlobalInterpreter.interpret(ParseTest.class.getResourceAsStream("/diamond/lib/arrays.cndm"), s);
+		GlobalInterpreter.interpret(ParseTest.class.getResourceAsStream("/diamond/lib/io.cndm"), s);
 		GlobalInterpreter.interpret(System.in, s);
 	}
 	

@@ -65,7 +65,9 @@ public class TokenHandlerImpl implements TokenHandler {
 		switch(t.getCategory()){
 		case STR_CLOSE: increaseStringDepth(-1); stateCheck(TokenCategory.STR_CLOSE); break;
 		case STR_OPEN: increaseStringDepth(1); appendString("["); break;
-		case SEMICOLON: stringList.add(stringBuilder.toString()); stringBuilder = new StringBuilder(); break;
+		case SEMICOLON: if(stringDepth == 1){
+			stringList.add(stringBuilder.toString()); stringBuilder = new StringBuilder(); break;
+		}
 		default: {
 			appendString(t.raw());
 		}

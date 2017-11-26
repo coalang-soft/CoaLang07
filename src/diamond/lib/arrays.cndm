@@ -1,0 +1,8 @@
+let removeFirst = [ [ array ? ( array length \ 1 range + 1 ) ] $$ [ array ] ] ! ;
+let removeLast = [ [ array ? ( array length \ 1 range ) ] $$ [ array ] ] ! ;
+let sum = [ [ numbers / + ] $$ [ numbers ] ] ! ;
+let product = [ [ numbers / * ] $$ [ numbers ] ] ! ;
+def from [ start ] [
+	[ [ end \ start + 1 range + start ] $ [ end ] ] ' [ toKW ]
+] ! ;
+def .. [ start ; stop ] [ from start to stop ] ! ;

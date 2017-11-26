@@ -1,0 +1,13 @@
+let isFullIo = TRUE ! ;
+def file [ path ] [
+	new java.io.File ? 1 path
+] ! ;
+def reader [ source ] [
+	new java.util.Scanner ? 1 source ;
+] ! ;
+def nextLine [ reader ] [
+	reader @ nextLine ? 0
+] ! ;
+def hasNextLine [ reader ] [
+	reader @ hasNextLine ? 0
+] ! ;

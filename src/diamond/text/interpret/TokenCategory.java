@@ -24,12 +24,10 @@ public enum TokenCategory {
 				}
 			}
 		}
-		if(Character.isDigit(raw.charAt(0)) || raw.charAt(0) == '-' || raw.charAt(0) == '.'){
+		if(Character.isDigit(raw.charAt(0)) || raw.charAt(0) == '-'){
 			return NUMBER;
 		}
-//		if(raw.charAt(0) == '/'){
-//			return TokenCategory.LIST_OPERATION;
-//		}
+		
 		return NAME;
 	}
 

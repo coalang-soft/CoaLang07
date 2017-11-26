@@ -29,6 +29,7 @@ public class Environment {
 		global.put("<", Operators.LSS);
 		global.put(">", Operators.GTR);
 		global.put("=", Operators.EQU);
+		global.put("%%", Operators.MOD);
 		global.put(",", Operators.ARR_CONCAT);
 		global.put("arrayAt", new ArrayAtFunction());
 		global.put("length", new ArrayFunction() {
