@@ -1,28 +1,28 @@
 [ [
-	[ /* ] , [ [ ] ] arrayAt ( c = [ */ ] ) !
+	[ /* ] , [ [ x ] $ [ x ] ] arrayAt ( c = [ */ ] ) !
 ] ' [ c ] ] :! [ /* ] ;
 
-/* ?index. generates the index accessed with ? */ ;
+/* ?index. generates the index accessed with ? */
 [ [ [ [ index ] , [ array length + index ] arrayAt ( index < 0 ) ! ] $ [ index ] ] $$ [ array ] ] :! [ ?index ] ;
-/* ?. The "arrayAt" function with negative indexes */ ;
+/* ?. The "arrayAt" function with negative indexes */
 [ [ [ array arrayAt ( ?index array index ) ] $ [ index ] ] $$ [ array ] ] :! [ ? ] ;
 
-/* abs. */ ;
+/* abs. */
 [ [ [ num ] , [ 0 \ num ] ? ( num < 0 ) ! ] $ [ num ] ] :! [ abs ] ;
 
-/* true and false */ ;
+/* true and false */
 [ 1 ; 0 ; strConcat ] :! [ TRUE ; FALSE ; ,, ] ;
 
-/* special string constants for code generation */ ;
+/* special string constants for code generation */
 [ ( ; ) ; | s ; | [ ; | ] ; | ; ] : [ BRACKET_OPEN ; BRACKET_CLOSE ; SPACE ; BRACE_OPEN ; BRACE_CLOSE ; SEMICOLON ] ;
 
-/* reverseRange. "reverseRange 3" is [2,1,0]. */ ;
+/* reverseRange. "reverseRange 3" is [2,1,0]. */
 [ [ x \ ( x range ) \ 1 ] $ [ x ] ] :! [ reverseRange ] ;
 
-/* reverse. "reverse [a,b,c]" is [c,b,a]. */ ;
+/* reverse. "reverse [a,b,c]" is [c,b,a]. */
 [ [ a ? ( a length reverseRange ) ] $$ [ a ] ] :! [ reverse ] ;
 
-/* withCode. Generates function code using a functionBuilder ($ $$ ' etc.), the functions code and an arguments array. */ ;
+/* withCode. Generates function code using a functionBuilder ($ $$ ' etc.), the functions code and an arguments array. */
 [
 	[ [
 		[
@@ -35,26 +35,29 @@
 	] $ [ functionContent ] ] $ [ functionBuilder ]
 ] :! [ withCode ] ;
 
-/* withSingle, withArray, withMacro */ ;
+/* withSingle, withArray, withMacro */
 [ withCode [ $ ] ; withCode [ $$ ] ; withCode [ ' ] ] :! [ withSingleCode ; withArrayCode ; withMacroCode ] ;
 [ [ [ withSingleCode code args ! ] $$ [ args ] ] $ [ code ] ] :! [ withSingle ] ;
 [ [ [ withArrayCode code args ! ] $$ [ args ] ] $ [ code ] ] :! [ withArray ] ;
 [ [ [ withMacroCode code args ! ] $$ [ args ] ] $ [ code ] ] :! [ withMacro ] ;
 
-/* let. let name = value ; generates code that stores the value (macro argument) in the variable name (macro argument) */ ;
+/* let. let name = value ; generates code that stores the value (macro argument) in the variable name (macro argument) */
 [ [ BRACE_OPEN , value , BRACE_CLOSE , [ :! ] , BRACE_OPEN , name , BRACE_CLOSE join SPACE ] $ [ value ] ] withMacroCode [ name ; equals ] :! [ let ] ;
 
-/* def. "def name arguments code ;" generates code that stores a function with parameters arguments (array) and code code (string) in the variable name (macro argument) */ ;
+/* def. "def name arguments code ;" generates code that stores a function with parameters arguments (array) and code code (string) in the variable name (macro argument) */
 let def = [
-	[ [ [ BRACE_OPEN , ( content withSingleCode args ) , BRACE_CLOSE , [ :! ] , BRACE_OPEN , name , BRACE_CLOSE join SPACE ] $ [ content ] ] $$ [ args ] ] ' [ name ]
+	[ [ [ BRACE_OPEN , ( content withSingleCode args ) , BRACE_CLOSE , [ :! ] , BRACE_OPEN , name , BRACE_CLOSE join SPACE ] $$ [ content ] ] $$ [ args ] ] ' [ name ]
 ] ! ;
 
-/* if. "if condition [what] else [otherwise] !" runs what if condition is 1 and otherwise if condition is 0 */ ;
+/* if. "if condition [what] else [otherwise] !" runs what if condition is 1 and otherwise if condition is 0 */
 def if [ condition ; then ] [
 	[
 		[ BRACE_OPEN , otherwise , SEMICOLON , then , BRACE_CLOSE , [ ? ] , BRACKET_OPEN , condition , BRACKET_CLOSE , [ ! ] join SPACE ] $ [ otherwise ]
 	] ' [ elseKW ]
 ] ! ;
 
-/* lambda. "lambda name [ code ] !" generates a Function with the Parameter name and the code code. */ ;
+/* lambda. "lambda name [ code ] !" generates a Function with the Parameter name and the code code. */
 let lambda = [ [ [ BRACE_OPEN , code , BRACE_CLOSE , [ $ ] , BRACE_OPEN , argument , BRACE_CLOSE join SPACE ] $ [ code ] ] ' [ argument ] ] ! ;
+
+/* multiLineCode. Connects a code array to a single code string. */
+let multiLineCode = [ [ code join ( SPACE ,, SEMICOLON ,, SPACE ) ] $$ [ code ] ] ;

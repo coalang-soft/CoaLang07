@@ -1,9 +1,11 @@
 package diamond.run.core.model;
 
+import java.io.Serializable;
+
 import diamond.run.core.impl.ArrayImpl;
 import diamond.run.environment.Scope;
 
-public interface Value {
+public interface Value extends Serializable {
 	
 	Type getType();
 	Value take(Scope s, Value v);

@@ -1,8 +1,14 @@
 package diamond.run.environment;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
+import cpa.subos.io.IO;
+import cpa.subos.io.IOBase;
+import diamond.run.core.impl.dynamic.RangeArray;
 import diamond.run.core.impl.ArrayImpl;
 import diamond.run.core.impl.DefaultSingleImpl;
 import diamond.run.core.impl.Operators;
@@ -62,11 +68,7 @@ public class Environment {
 			@Override
 			public Value takeSingle(Scope s, Value v) {
 				int len = (int) v.castNumber();
-				Value[] arr = new Value[len];
-				for(int i = 0; i < len; i++){
-					arr[i] = new DefaultSingleImpl(i);
-				}
-				return new ArrayImpl(arr);				
+				return new RangeArray(len);
 			}
 			
 			@Override
@@ -216,6 +218,34 @@ public class Environment {
 		});
 		global.put(":", new StoreConstFunction());
 		global.put(":!", new StoreConstFunction2());
+		global.put("jSerialize", new ArrayFunction() {
+			@Override
+			public Value takeArray(Scope s, Array a) {
+				try {
+					IOBase<?> buffer = IO.buffer();
+					ObjectOutputStream stream = new ObjectOutputStream(buffer.writer());
+					stream.writeObject(a);
+					stream.close();
+					return new DefaultSingleImpl(buffer);
+				} catch (IOException e) {
+					throw new RuntimeException(e);
+				}
+			}
+		});
+		global.put("jDeserialize", new SingleFunction() {
+			@Override
+			public Value takeSingle(Scope s, Value a) {
+				try {
+					ObjectInputStream ois = new ObjectInputStream(((IOBase<?>) a.get()).reader());
+					Object o = ois.readObject();
+					ois.close();
+					return (Value) o;
+				} catch (IOException | ClassNotFoundException e) {
+					e.printStackTrace();
+					throw new RuntimeException(e);
+				}
+			}
+		});
 	}
 	
 }

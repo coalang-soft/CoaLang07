@@ -1,5 +1,7 @@
 package diamond.run.core.model;
 
+import diamond.run.core.impl.ArrayImpl;
+import diamond.run.core.impl.dynamic.DynamicArray;
 import diamond.run.environment.Scope;
 
 public interface Array extends Value{
@@ -19,11 +21,11 @@ public interface Array extends Value{
 	}
 	
 	default Array takeSingle(Scope s, Value v){
-		Value[] vs = new Value[length()];
-		for(int i = 0; i < vs.length; i++){
-			vs[i] = get(i).take(s, v);
+		Value[] vals = new Value[length()];
+		for(int i = 0; i < vals.length; i++){
+			vals[i] = get(i).take(s, v);
 		}
-		return makeArray(vs);
+		return makeArray(vals);
 	}
 	
 	default Array takeArray(Scope s, Array v){
@@ -44,6 +46,8 @@ public interface Array extends Value{
 
 	int length();
 	Value get(int index);
-	Array makeArray(Value... values);
+	default Array makeArray(Value... values){
+		return new ArrayImpl(values);
+	}
 
 }

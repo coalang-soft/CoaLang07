@@ -1,13 +1,37 @@
 let isFullIo = TRUE ! ;
 def file [ path ] [
-	new java.io.File ? 1 path
+	java [ cpa.subos.io.IO ] @ file ? 1 path
+] ! ;
+def url [ url ] [
+	java [ cpa.subos.io.IO ] @ url ? 1 url
+] ! ;
+def clientSocket [ server ; port ] [
+	java [ cpa.subos.io.IO ] @ clientSocket ? 2 server port
+] ! ;
+def serverSocket [ port ] [
+	java [ cpa.subos.io.IO ] @ serverSocket ? 1 port
 ] ! ;
 def reader [ source ] [
-	new java.util.Scanner ? 1 source ;
+	new java.util.Scanner ? 1 ( source @ reader ? 0 ) ;
 ] ! ;
 def nextLine [ reader ] [
 	reader @ nextLine ? 0
 ] ! ;
 def hasNextLine [ reader ] [
 	reader @ hasNextLine ? 0
+] ! ;
+def asciiContentString [ source ] [
+	source @ buildString ? 1 [ ASCII ] ;
+] ! ;
+def contentString [ source ; encoding ] [
+	source @ buildString ? 1 encoding ;
+] ! ;
+def asciiWriteString [ dest ; string ] [
+	dest @ writeString ? 2 string [ ASCII ]
+] ! ;
+def writeString [ dest ; string ; encoding ] [
+	dest @ writeString ? 2 string encoding
+] ! ;
+def writeContents [ dest ; orig ] [
+	dest @ downloadFrom ? 1 orig
 ] ! ;
