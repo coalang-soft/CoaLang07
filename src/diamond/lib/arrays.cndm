@@ -6,3 +6,7 @@ def from [ start ] [
 	[ [ end \ start + 1 range + start ] $ [ end ] ] ' [ toKW ]
 ] ! ;
 def .. [ start ; stop ] [ from start to stop ] ! ;
+
+def invoke [ function ] [
+	[ if ( length args = 0 ) [ function ] else [ invoke ( function ( args ? 0 ) ) ( removeFirst args ) ] ! ] $$ [ args ]
+] ;

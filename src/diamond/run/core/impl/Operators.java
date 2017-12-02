@@ -15,7 +15,14 @@ public interface Operators {
 	
 	NumberOperator LSS = (s,a,b) -> a<b?1:0;
 	NumberOperator GTR = (s,a,b) -> a>b?1:0;
-	SingleOperator EQU = (s,a,b) -> new DefaultSingleImpl(a.get().equals(b.get())?1:0);
+	SingleOperator EQU = (s,a,b) -> {
+		Object av = a.get();
+		Object bv = b.get();
+		if(av instanceof Number && bv instanceof Number){
+			return new DefaultSingleImpl(a.castNumber() == b.castNumber()?1:0);
+		}
+		return new DefaultSingleImpl(av.equals(bv)?1:0);
+	};
 	
 	ArrayOperator ARR_CONCAT = (s,a,b) -> Arrays.concat(a,b);
 	

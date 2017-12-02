@@ -26,6 +26,8 @@ public class ParseTest {
 //		GlobalInterpreter.interpret(ParseTest.class.getResourceAsStream("/diamond/lib/jserialize.cndm"), s);
 		GlobalInterpreter.interpret(System.in, s);
 		
+//		GlobalInterpreter.interpret(new FileInputStream("samples/ioSample.cndm"), s);
+		
 //		ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream("scope.srimg"));
 //		stream.writeObject(s);
 //		stream.close();

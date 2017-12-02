@@ -5,6 +5,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 import cpa.subos.io.IO;
 import cpa.subos.io.IOBase;
@@ -244,6 +246,31 @@ public class Environment {
 					e.printStackTrace();
 					throw new RuntimeException(e);
 				}
+			}
+		});
+		global.put("portListener", new SingleOperator() {
+			@Override
+			public Value operateSingle(Scope s, Value port, Value action) {
+				Thread t = new Thread(){
+					public void run(){
+						ServerSocket socket;
+						try {
+							socket = new ServerSocket((int) port.castNumber());
+						} catch (IOException e) {
+							throw new RuntimeException(e);
+						}
+						while(true){
+							try {
+								Socket client = socket.accept();
+								action.take(s, new DefaultSingleImpl(IO.clientSocket(client)));
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						}
+					}
+				};
+				t.start();
+				return new DefaultSingleImpl(t);
 			}
 		});
 	}

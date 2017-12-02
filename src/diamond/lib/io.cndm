@@ -8,9 +8,6 @@ def url [ url ] [
 def clientSocket [ server ; port ] [
 	java [ cpa.subos.io.IO ] @ clientSocket ? 2 server port
 ] ! ;
-def serverSocket [ port ] [
-	java [ cpa.subos.io.IO ] @ serverSocket ? 1 port
-] ! ;
 def reader [ source ] [
 	new java.util.Scanner ? 1 ( source @ reader ? 0 ) ;
 ] ! ;
@@ -32,6 +29,11 @@ def asciiWriteString [ dest ; string ] [
 def writeString [ dest ; string ; encoding ] [
 	dest @ writeString ? 2 string encoding
 ] ! ;
-def writeContents [ dest ; orig ] [
+def copyFrom [ dest ; orig ] [
 	dest @ downloadFrom ? 1 orig
 ] ! ;
+def writeTo [ orig ; dest ] [
+	dest @ downloadFrom ? 1 orig
+] ! ;
+
+let out = [ java [ java.lang.System ] # out @ println ? 1 ] ! ;

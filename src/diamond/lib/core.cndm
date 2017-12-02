@@ -56,8 +56,22 @@ def if [ condition ; then ] [
 	] ' [ elseKW ]
 ] ! ;
 
+/* Comparison */
+def not [ a ] [
+	a = 0
+] ! ;
+def != [ a ; b ] [
+	a = b not
+] ! ;
+def or [ a ; b ] [
+	if ( a > b ) [ a ] else [ b ] !
+] ! ;
+def and [ a ; b ] [
+	if ( a < b ) [ a ] else [ b ] !
+] ! ;
+
 /* lambda. "lambda name [ code ] !" generates a Function with the Parameter name and the code code. */
 let lambda = [ [ [ BRACE_OPEN , code , BRACE_CLOSE , [ $ ] , BRACE_OPEN , argument , BRACE_CLOSE join SPACE ] $ [ code ] ] ' [ argument ] ] ! ;
 
 /* multiLineCode. Connects a code array to a single code string. */
-let multiLineCode = [ [ code join ( SPACE ,, SEMICOLON ,, SPACE ) ] $$ [ code ] ] ;
+let multiLineCode = [ [ code join ( SPACE ,, SEMICOLON ,, SPACE ) ] $$ [ code ] ] ! ;
