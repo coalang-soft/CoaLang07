@@ -1,0 +1,9 @@
+def messageDialog [ content ] [
+	java [ javax.swing.JOptionPane ] 
+	@ showMessageDialog ? 2 jNull content
+] ! ;
+
+def inputDialog [ question ] [
+	java [ javax.swing.JOptionPane ] 
+	@ showInputDialog ? 1 question
+] ! ;

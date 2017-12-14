@@ -1,0 +1,6 @@
+load [ libs/core.cndm ] ! ;
+load [ libs/jbridge.cndm ] ! ;
+
+load [ libs/io.cndm ] ! ;
+load [ libs/arrays.cndm ] ! ;
+load [ libs/struct.cndm ] ! ;

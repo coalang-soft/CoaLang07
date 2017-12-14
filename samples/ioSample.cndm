@@ -1,0 +1,2 @@
+url [ https://www.github.com/coalang-soft ]
+	writeTo	( file [ download.txt ] ) ;

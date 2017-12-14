@@ -10,3 +10,5 @@ def .. [ start ; stop ] [ from start to stop ] ! ;
 def invoke [ function ] [
 	[ if ( length args = 0 ) [ function ] else [ invoke ( function ( args ? 0 ) ) ( removeFirst args ) ] ! ] $$ [ args ]
 ] ;
+[ [ [ arr = value / + > 0 ] $ [ value ] ] $$ [ arr ] ] :! [ contains ] ;
+[ [ [ arr length range * ( arr = value ) / + ] $ [ value ] ] $$ [ arr ] ] :! [ onlyIndexOf ] ;

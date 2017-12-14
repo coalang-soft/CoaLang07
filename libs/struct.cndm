@@ -1,0 +1,3 @@
+[ [
+	[ [ values ? ( names onlyIndexOf key ) ] $ [ key ] ] $$ [ values ]
+] $$ [ names ] ] :! [ struct ] ;

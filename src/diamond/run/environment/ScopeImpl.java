@@ -1,6 +1,8 @@
 package diamond.run.environment;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
 
 import diamond.run.core.impl.Arrays;
 import diamond.run.core.model.Value;
@@ -50,6 +52,11 @@ public class ScopeImpl implements Scope {
 	@Override
 	public String toString() {
 		return "ScopeImpl [values=" + values + ", parent=" + parent + "]";
+	}
+	
+	@Override
+	public Set<String> getVariables() {
+		return values.keySet();
 	}
 
 }

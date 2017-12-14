@@ -1,5 +1,8 @@
 package diamond.run.environment;
 
+import java.util.List;
+import java.util.Set;
+
 import diamond.run.core.model.Value;
 
 public interface ReadOnlyScope {
@@ -17,5 +20,7 @@ public interface ReadOnlyScope {
 		}
 		return parent().deepLookup(name);
 	}
+	
+	Set<String> getVariables();
 	
 }

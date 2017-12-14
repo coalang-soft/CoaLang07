@@ -1,0 +1,3 @@
+[ [
+	java [ cpa.subos.io.IO ] method [ file ] arrayAt 1 path method [ buildString ] arrayAt 1 [ ASCII ]
+] $ [ path ] ] :! [ load ] ;

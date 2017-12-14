@@ -29,6 +29,17 @@ import diamond.text.interpret.GlobalInterpreter;
 public class Environment {
 	
 	public static void initGlobal(Scope global){
+		global.put("existsGlobal", new SingleFunction() {
+			@Override
+			public Value takeSingle(Scope s, Value a) {
+				try{
+					s.deepLookup(a.get() + "");
+					return new DefaultSingleImpl(1);
+				}catch(Exception e){
+					return new DefaultSingleImpl(0);
+				}
+			}
+		});
 		global.put("+", Operators.ADD);
 		global.put("\\", Operators.SUB);
 		global.put("*", Operators.MUL);
@@ -132,6 +143,7 @@ public class Environment {
 				return new JavaClass(a.get() + "");
 			}
 		});
+		global.put("jNull", new DefaultSingleImpl(null));
 		global.put("field", new FieldFunction());
 		global.put("constructor", new ConstructorFunction());
 		global.put("method", new MethodFunction());
@@ -158,6 +170,10 @@ public class Environment {
 					public Value callZeroArg() {
 						return this;
 					}
+					
+					public String toString(){
+						return code;
+					}
 				};
 			}
 		});
@@ -182,6 +198,10 @@ public class Environment {
 					@Override
 					public Value callZeroArg() {
 						return this;
+					}
+					
+					public String toString(){
+						return code;
 					}
 				};
 			}
@@ -213,6 +233,10 @@ public class Environment {
 					@Override
 					public Value callZeroArg() {
 						return this;
+					}
+					
+					public String toString(){
+						return code;
 					}
 				};
 			}

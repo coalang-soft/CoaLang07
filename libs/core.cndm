@@ -44,16 +44,19 @@
 /* let. let name = value ; generates code that stores the value (macro argument) in the variable name (macro argument) */
 [ [ BRACE_OPEN , value , BRACE_CLOSE , [ :! ] , BRACE_OPEN , name , BRACE_CLOSE join SPACE ] $ [ value ] ] withMacroCode [ name ; equals ] :! [ let ] ;
 
+/* multiLineCode. Connects a code array to a single code string. */
+let multiLineCode = [ [ code join ( SPACE ,, SEMICOLON ,, SPACE ) ] $$ [ code ] ] ! ;
+
 /* def. "def name arguments code ;" generates code that stores a function with parameters arguments (array) and code code (string) in the variable name (macro argument) */
 let def = [
-	[ [ [ BRACE_OPEN , ( content withSingleCode args ) , BRACE_CLOSE , [ :! ] , BRACE_OPEN , name , BRACE_CLOSE join SPACE ] $$ [ content ] ] $$ [ args ] ] ' [ name ]
+	[ [ [ BRACE_OPEN , ( multiLineCode content withSingleCode args ) , BRACE_CLOSE , [ :! ] , BRACE_OPEN , name , BRACE_CLOSE join SPACE ] $$ [ content ] ] $$ [ args ] ] ' [ name ]
 ] ! ;
 
 /* if. "if condition [what] else [otherwise] !" runs what if condition is 1 and otherwise if condition is 0 */
-def if [ condition ; then ] [
-	[
-		[ BRACE_OPEN , otherwise , SEMICOLON , then , BRACE_CLOSE , [ ? ] , BRACKET_OPEN , condition , BRACKET_CLOSE , [ ! ] join SPACE ] $ [ otherwise ]
-	] ' [ elseKW ]
+def if [ condition ] [
+	[ [
+		[ BRACE_OPEN , ( multiLineCode otherwise ) , SEMICOLON , ( multiLineCode then ) , BRACE_CLOSE , [ ? ] , BRACKET_OPEN , condition , BRACKET_CLOSE , [ ! ] join SPACE ] $$ [ otherwise ]
+	] ' [ elseKW ] ] $$ [ then ]
 ] ! ;
 
 /* Comparison */
@@ -72,6 +75,3 @@ def and [ a ; b ] [
 
 /* lambda. "lambda name [ code ] !" generates a Function with the Parameter name and the code code. */
 let lambda = [ [ [ BRACE_OPEN , code , BRACE_CLOSE , [ $ ] , BRACE_OPEN , argument , BRACE_CLOSE join SPACE ] $ [ code ] ] ' [ argument ] ] ! ;
-
-/* multiLineCode. Connects a code array to a single code string. */
-let multiLineCode = [ [ code join ( SPACE ,, SEMICOLON ,, SPACE ) ] $$ [ code ] ] ! ;

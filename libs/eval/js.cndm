@@ -1,0 +1,3 @@
+[ new javax.script.ScriptEngineManager ? 0
+	@ getEngineByName ? 1 [ nashorn ]
+	@ eval ? 1 ] :! [ js ] ;
