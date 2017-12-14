@@ -36,4 +36,4 @@ def writeTo [ orig ; dest ] [
 	dest @ downloadFrom ? 1 orig
 ] ! ;
 
-def out [ obj ] [ java [ java.lang.System ] # out @ println ? 1 obj ] ! ;
+let out = [ [ java [ java.lang.System ] # out @ println ? 1 x ] $ [ x ] ] ! ;
