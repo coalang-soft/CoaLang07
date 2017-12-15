@@ -27,7 +27,7 @@ public class VariableTreeItem extends TreeItem {
 		case SINGLE_FUNCTION: c = Color.LIGHTBLUE; break;
 		default: c = Color.RED;
 		}
-		getChildren().add(new ValueTreeItem(value));
+		getChildren().add(new ValueTreeItem(scope, value));
 		l.setTextFill(c);
 		setValue(l);
 	}
