@@ -26,12 +26,12 @@ public class ParseTest {
 		
 		GlobalInterpreter.interpret(ParseTest.class.getResourceAsStream("/diamond/lib/load.cndm"), s);
 		
-		JFXPanel p = new JFXPanel();
-		p.setScene(new Scene(new ScopeExplorer(s)));
-		JFrame f = new JFrame("Scope explorer");
-		f.add(p);
-		f.setVisible(true);
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		JFXPanel p = new JFXPanel();
+//		p.setScene(new Scene(new ScopeExplorer(s)));
+//		JFrame f = new JFrame("Scope explorer");
+//		f.add(p);
+//		f.setVisible(true);
+//		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		GlobalInterpreter.interpret(System.in, s);
 		

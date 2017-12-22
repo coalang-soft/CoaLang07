@@ -1,0 +1,6 @@
+def strChars [ str ] [
+	str @ toCharArray ? 0
+] ! ;
+def strReverse [ str ] [
+	str strChars reverse / strConcat
+] ! ;

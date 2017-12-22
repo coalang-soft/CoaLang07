@@ -1,5 +1,5 @@
 let @ = [ [ [ object method methodName ] ' [ methodName ] ] $ [ object ] ] ! ;
 let # = [ [ [ object field fieldName ] ' [ fieldName ] ] $ [ object ] ] ! ;
 let new = [ [ classname java constructor ] ' [ classname ] ] ! ;
-let class = [ [ classname java ] ' [ classname ] ] ! ;
-let jImport = [ [ classname @ split ? 1 [ \. ] ? -1 let = ( [ class ] , classname join SPACE ) ] ' [ classname ] ] ! ;
+let jClass = [ [ classname java ] ' [ classname ] ] ! ;
+let jImport = [ [ classname @ split ? 1 [ \. ] ? -1 let = ( [ jClass ] , classname join SPACE ) ] ' [ classname ] ] ! ;
