@@ -5,5 +5,7 @@ load [
 	libs/io.cndm ;
 	libs/arrays.cndm ;
 	libs/struct.cndm ;
-	libs/str.cndm
+	libs/str.cndm ;
+	libs/dict.cndm ;
+	libs/macroOf.cndm
 ] ! ;

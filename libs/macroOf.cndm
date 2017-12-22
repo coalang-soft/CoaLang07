@@ -1,0 +1,3 @@
+def macroOf [ function ] [
+	[ function arg ] ' [ arg ]
+] ! ;

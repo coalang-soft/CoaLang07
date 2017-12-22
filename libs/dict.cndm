@@ -1,0 +1,5 @@
+[ multiLineCode [
+	data ? ( length data % 2 range * 2 ) : [ nameKeys ] ;
+	data ? ( length data % 2 range * 2 + 1 ) : [ valueKeys ] ;
+	nameKeys struct ( valueKeys ! )
+] $$ [ data ] ] :! [ finalDict ] ;

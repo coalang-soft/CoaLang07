@@ -4,3 +4,12 @@ def strChars [ str ] [
 def strReverse [ str ] [
 	str strChars reverse / strConcat
 ] ! ;
+def strAt [ str ; index ] [
+	str strChars ? index
+] ! ;
+def strFromTo [ str ; from ; to ] [
+	str strChars ? ( from .. to ) / ,,
+] ! ;
+def strLength [ str ] [
+	str strChars length
+] ! ;
